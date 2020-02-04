@@ -26,9 +26,13 @@
          $paginas = array(
           array('name' => 'Page 1', 'link' => "/page_1.php",'children' => false),
           array('name' => 'Page 2', 'link' => "/page_2.php",'children' => false),
-          array('name' => 'More','children' => true,'chil' => array('name' => 'Page 3', 'link' => "/page_3.php",'name' => 'Page 4', 'link' => "/page_4.php")),
-          array('name' => 'mas','children' => true),
+          array('name' => 'More','children' => true),
         );
+
+         $children = array(
+                    array('parent' => 'More','name' => 'Page 3', 'link' => "/page_3.php"),
+                    array('parent' => 'More','name' => 'Page 4', 'link' => "/page_4.php"),
+       );
   ?>
     <div class="navbar-start">
         <?php foreach ($paginas as $page) {?>
@@ -37,21 +41,18 @@
                         <a class="navbar-link">
                           <?php echo $page['name'] ?>
                         </a>
-              <?php foreach ($page['chil'] as $a) {?>
-                <ul class="navbar-item"><?php echo $a['name'] ?></ul>
-                        <div class="navbar-dropdown">
-                          <a class="navbar-item" href="<?php echo $a ?>">
-                            <?php echo $a ?>
+                  <div class="navbar-dropdown">
+                   <?php foreach ($children as $child) {?>
+                  <?php if($child['parent']== $page['name']){ ?>
+                        
+                          <a class="navbar-item" href="<?php echo $child["link"] ?>">
+                            <?php echo $child['name'] ?>
                           </a>
-                          <a class="navbar-item" href="/page_4.php">
-                            Page 4
-                          </a>
-                          <a class="navbar-item" href="/page_5.php">
-                            Page 5
-                          </a>
-                        </div>
+                         <?php } ?> 
+                  <?php } ?>  
+                  </div>
                 </div>
-                <?php } ?>      
+                    
             <?php }else{ ?>
                 <a class="navbar-item" href="<?php echo $page['link'] ?>"> <?php echo $page['name'] ?></a>
             <?php } ?> 
